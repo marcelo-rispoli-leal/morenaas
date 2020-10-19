@@ -227,10 +227,10 @@ const resetPass = async (req, res, next) => {
     errors.invalidResetToken(token, reset_pass_token, reset_pass_expires);
 
     //encrypts password
-    password = await sets.setPassword(password);
+    password = await sets.password(password);
 
     //updates password
-    await sets.setFields('users', 'password=$1', [password, cpf], 'cpf=$2');
+    await sets.fields('users', 'password=$1', [password, cpf], 'cpf=$2');
 
     //sends successful response
     res.send({ success: 'Password redefined.' });
