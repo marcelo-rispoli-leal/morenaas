@@ -2,7 +2,7 @@ export const swaggerDoc = {
   openapi: '3.0.1',
   info: {
     title: 'Morenaas - MOvie RENtal As A Service',
-    description: 'This is a sample and movie rental API.',
+    description: 'This is a fictional sample of a movie rental API.',
     contact: {
       email: 'marcelorispoli@gmail.com',
     },
