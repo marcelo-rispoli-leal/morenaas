@@ -27,7 +27,7 @@ async function resetToken(cpf) {
   now = now.toISOString();
 
   //updates user
-  await setFields(
+  await fields(
     'users',
     'reset_pass_token=$1, reset_pass_expires=$2',
     [token, now, cpf],
