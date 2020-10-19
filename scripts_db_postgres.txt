@@ -1,0 +1,152 @@
+-- SEQUENCE: public.movies_seq
+
+-- DROP SEQUENCE public.movies_seq;
+
+CREATE SEQUENCE public.movies_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
+-- SEQUENCE: public.tapes_seq
+
+-- DROP SEQUENCE public.tapes_seq;
+
+CREATE SEQUENCE public.tapes_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
+-- SEQUENCE: public.rents_seq
+
+-- DROP SEQUENCE public.rents_seq;
+
+CREATE SEQUENCE public.rents_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
+-- SEQUENCE: public.rents_tapes_seq
+
+-- DROP SEQUENCE public.rents_tapes_seq;
+
+CREATE SEQUENCE public.rents_tapes_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
+-- Table: public.users
+
+-- DROP TABLE public.users;
+
+CREATE TABLE public.users
+(
+    cpf character varying(16) COLLATE pg_catalog."default" NOT NULL,
+    name character varying(64) COLLATE pg_catalog."default" NOT NULL,
+    email character varying(128) COLLATE pg_catalog."default" NOT NULL,
+    mobile character varying(16) COLLATE pg_catalog."default",
+    landline character varying(16) COLLATE pg_catalog."default",
+    worker boolean NOT NULL DEFAULT false,
+    customer boolean NOT NULL DEFAULT false,
+    password character varying(128) COLLATE pg_catalog."default" NOT NULL,
+    token character varying(255) COLLATE pg_catalog."default",
+    reset_pass_token character varying(64) COLLATE pg_catalog."default",
+    reset_pass_expires character varying(32) COLLATE pg_catalog."default",
+    file_name character varying(48) COLLATE pg_catalog."default",
+    file_path character varying(48) COLLATE pg_catalog."default",
+    created_at character varying(32) COLLATE pg_catalog."default",
+    CONSTRAINT users_pk PRIMARY KEY (cpf),
+    CONSTRAINT users_uk UNIQUE (email)
+)
+
+
+-- Table: public.movies
+
+-- DROP TABLE public.movies;
+
+CREATE TABLE public.movies
+(
+    id integer NOT NULL DEFAULT nextval('movies_seq'::regclass),
+    title character varying(64) COLLATE pg_catalog."default" NOT NULL,
+    director character varying(128) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT movies_pk PRIMARY KEY (id),
+    CONSTRAINT movies_uk1 UNIQUE (title, director)
+)
+
+
+-- Index: movies_title_idx
+
+-- DROP INDEX public.movies_title_idx;
+
+CREATE INDEX movies_title_idx
+    ON public.movies USING btree
+    (title COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+
+-- Table: public.tapes
+
+-- DROP TABLE public.tapes;
+
+CREATE TABLE public.tapes
+(
+    id integer NOT NULL DEFAULT nextval('tapes_seq'::regclass),
+    movie_id integer NOT NULL,
+    available boolean NOT NULL DEFAULT true,
+    CONSTRAINT tapes_pk PRIMARY KEY (id),
+    CONSTRAINT tapes_movies_fk FOREIGN KEY (movie_id)
+        REFERENCES public.movies (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
+
+
+-- Table: public.rents
+
+-- DROP TABLE public.rents;
+
+CREATE TABLE public.rents
+(
+    id integer NOT NULL DEFAULT nextval('rents_seq'::regclass),
+    cpf character varying(16) COLLATE pg_catalog."default" NOT NULL,
+    name character varying(64) COLLATE pg_catalog."default" NOT NULL,
+    email character varying(128) COLLATE pg_catalog."default" NOT NULL,
+    created_at character varying(32) COLLATE pg_catalog."default" NOT NULL,
+    deadline character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT rents_pk PRIMARY KEY (id)
+)
+
+
+-- Table: public.rents_tapes
+
+-- DROP TABLE public.rents_tapes;
+
+CREATE TABLE public.rents_tapes
+(
+    id integer NOT NULL DEFAULT nextval('rents_tapes_seq'::regclass),
+    rent_id integer NOT NULL,
+    tape_id integer NOT NULL,
+    movie_id integer NOT NULL,
+    title character varying(64) COLLATE pg_catalog."default" NOT NULL,
+    director character varying(128) COLLATE pg_catalog."default" NOT NULL,
+    returned boolean NOT NULL DEFAULT false,
+    returned_at character varying(32) COLLATE pg_catalog."default",
+    CONSTRAINT rents_tapes_pk PRIMARY KEY (id),
+    CONSTRAINT rents_tapes_rents_fk FOREIGN KEY (rent_id)
+        REFERENCES public.rents (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
+
+
