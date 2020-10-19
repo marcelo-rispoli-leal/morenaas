@@ -34,8 +34,10 @@ const createUser = async (req, res, next) => {
     const token = sets.authToken(cpf, false, false);
 
     //formats valid phones or adds an alert with invalid numbers
-    const { mobile, landline } = req.body;
+    let { mobile, landline } = req.body;
     const phones = alerts.phoneNotRecorded(mobile, landline);
+    mobile = phones.mobile;
+    landline = phones.mobile;
     let alert = phones.alert;
 
     //renames uploaded PDF or alerts that the account is opened after upload
@@ -50,7 +52,7 @@ const createUser = async (req, res, next) => {
     //formats name
     name = formatName(name);
 
-    const sql = `INSERT INTO users (cpf, name, email, mobile, landline, `;
+    let sql = `INSERT INTO users (cpf, name, email, mobile, landline, `;
     sql += `password, file_name, file_path, created_at, token) `;
     sql += `VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
 
