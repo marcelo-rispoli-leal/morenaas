@@ -1,34 +1,31 @@
 {
   "name": "morenaas",
-  "version": "1.0.0",
-  "description": "Morenaas - Movie Rental As A Service",
+  "version": "2.0.0",
+  "description": "Morenaas - MOvie RENtal As A Service",
   "main": "server/app.js",
   "scripts": {
-    "server": "nodemon -r dotenv/config --experimental-modules ./server/app.js",
-    "start": "node -r dotenv/config --experimental-modules ./server/app.js",
+    "server": "nodemon ./server/app.js",
+    "start": "node ./server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Marcelo Rispoli Leal",
   "license": "MIT",
-  "engines": {
-    "node": "12.18.3"
-  },
   "type": "module",
   "dependencies": {
-    "bcryptjs": "2.4.3",
-    "dotenv": "8.2.0",
-    "express": "4.17.1",
-    "google-libphonenumber": "3.2.13",
-    "jsonwebtoken": "8.5.1",
-    "moment-timezone": "0.5.31",
-    "multer": "1.4.2",
-    "nodemailer": "6.4.14",
-    "pg": "8.4.1",
-    "swagger-ui-express": "4.1.4",
-    "validator": "13.1.17"
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "google-libphonenumber": "^3.2.42",
+    "jsonwebtoken": "^9.0.2",
+    "moment-timezone": "^0.6.0",
+    "multer": "^2.0.1",
+    "nodemailer": "^7.0.3",
+    "pg": "^8.16.2",
+    "swagger-ui-express": "^5.0.1",
+    "validator": "^13.15.15"
   },
   "devDependencies": {
-    "nodemon": "2.0.5"
+    "nodemon": "^3.1.10"
   }
 }
