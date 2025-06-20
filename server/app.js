@@ -1,4 +1,5 @@
 //import dependencies
+import 'dotenv/config';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerDoc } from './app/docs/doc.js';
@@ -41,11 +42,12 @@ app.use('/', (err, _, res, __) => {
 
 //backend listening
 const { HOST, PORT } = process.env;
+const host = HOST || 'http://localhost:3001';
 const port = PORT || 3001;
 
 app.listen(port, async () => {
   try {
-    console.log(`API Started on host '${HOST}'`);
+    console.log(`API Started on host '${host}' and port '${port}'`);
   } catch (err) {
     console.log(err);
   }

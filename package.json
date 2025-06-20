@@ -8,7 +8,18 @@
     "start": "node ./server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "movie-rental-api",
+    "rental-service",
+    "postgresql",
+    "nodejs",
+    "expressjs",
+    "jwt-authentication",
+    "brazil-cpf-validation",
+    "swagger-documentation",
+    "nodemailer-integration",
+    "movie-rental-system"
+  ],
   "author": "Marcelo Rispoli Leal",
   "license": "MIT",
   "type": "module",

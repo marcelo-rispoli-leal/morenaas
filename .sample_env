@@ -1,8 +1,5 @@
-#HOST=http://localhost:3001
+#HOST=https://api-url.com (add HOST variable only in remote environment, remove this line in local environment)
 HOST=
-
-#PORT=3001
-PORT=
 
 #DATABASE_URL=postgres://<username>:<password>@<dbhost>:<dbport>/<database>
 DATABASE_URL=

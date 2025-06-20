@@ -1,13 +1,76 @@
-# morenaas
+# Morenaas - MOvie RENtal As A Service
 
-Morenaas - Movie Rental As A Service
+## Overview
 
-API developed in JavaScript with Node, Express, Postgres, Moment Timezone, JWT authentication, CPF and Phone validation of Brazilian users, sends email through Nodemailer, imports PDF files through Multer and Swagger documentation in the OpenAPI 3 specification.
+A Node.js movie rental API built with Express and PostgreSQL, featuring:
 
-The API creates users, movies and fictitious rentals, retrieves data of users and movies recorded in the database, updates data and deletes users (CRUD), according to the user's access profile.
+- JWT authentication
+- Brazilian CPF validation
+- Movie rental management system
+- Nodemailer integration for email services
+- Swagger OpenAPI 3 documentation
+- Multer handling for PDF documentation uploads
 
-This project is already published on Heroku at https://morenaas.herokuapp.com/.
+## Getting Started
 
-A Front End with React will soon be developed, so that this project is a complete PERN.
+1. Clone the repository:
 
-Please contribute to the development of this API, let us know if you encounter problems or have suggestions for improvement.
+```bash
+git clone https://github.com/marcelo-rispoli-leal/morenaas.git
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Configure environment variables:
+
+- Copy `.sample_env` to `.env`
+- Set your PostgreSQL connection string in `DATABASE_URL` and other service credentials
+
+**Important**: Before starting the server, execute `scripts_db_postgres.txt` in your PostgreSQL database to create the required schema objects (tables, sequences, and constraints).
+
+4. Start the server:
+
+```bash
+npm run server  # development mode with nodemon
+npm start      # production mode
+```
+
+## API Documentation
+
+Access interactive documentation using Swagger UI at `https://morenaas.alwaysdata.net/docs` after starting the server.
+
+## Database Configuration
+
+The included PostgreSQL user in `.env` has all privileges to the only database created in the instance.
+
+## Testing Guidelines
+
+1. Use Swagger UI, Postman, or similar tools for endpoint verification
+2. Sample credentials available in `.sample_env`
+3. All endpoints require JWT authentication except routes under `/auth`
+
+## Project Structure
+
+```
+├── server/
+│   ├── app/           # Core application logic
+│   │   ├── controllers/  # Route handlers
+│   │   ├── docs/         # Swagger definitions
+│   │   ├── libs/         # Utilities and helpers
+│   │   ├── middlewares/  # Authentication layers
+│   │   └── routes/       # API endpoint routers
+│   ├── jsconfig.json # JavaScript configuration
+├── .env               # Environment variables
+├── .gitignore         # Version control exclusions
+├── package.json       # Dependencies and scripts
+├── scripts_db_postgres.txt  # Database schema setup
+└── README.md          # Project documentation
+```
+
+## Project Purpose
+
+This API serves as a technical demonstration of PERN stack development skills (Postgres, Express, React, Node), implementing movie rental concepts for portfolio purposes. While following production-grade patterns, it's not meant for actual commercial use.
