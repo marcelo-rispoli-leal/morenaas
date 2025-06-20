@@ -1,5 +1,5 @@
-#HOST=https://api-url.com (add HOST variable only in remote environment, remove this line in local environment)
-HOST=
+#APP_HOST=https://api-url.com (add APP_HOST variable only in remote environment, remove this line in local environment)
+APP_HOST=
 
 #DATABASE_URL=postgres://<username>:<password>@<dbhost>:<dbport>/<database>
 DATABASE_URL=

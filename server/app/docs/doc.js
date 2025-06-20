@@ -10,7 +10,7 @@ export const swaggerDoc = {
   },
   servers: [
     {
-      url: process.env.HOST || 'http://localhost:3001',
+      url: process.env.APP_HOST || 'http://localhost:3001',
     },
   ],
   tags: [

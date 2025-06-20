@@ -41,8 +41,8 @@ app.use('/', (err, _, res, __) => {
 });
 
 //backend listening
-const { HOST, PORT } = process.env;
-const host = HOST || 'http://localhost:3001';
+const { APP_HOST, PORT } = process.env;
+const host = APP_HOST || 'http://localhost:3001';
 const port = PORT || 3001;
 
 app.listen(port, async () => {
