@@ -25,17 +25,8 @@ jobs:
           echo "📦 Installing dependencies..."
           npm install --only=production
           
-          echo "🔍 Finding Node.js process ID (PID)..."
-          PID=$(pgrep -f "node server/app.js")
-          
-          if [ -z "$PID" ]; then
-            echo "⚠️ Could not find running Node.js process. It might be starting or stopped."
-            mkdir -p tmp
-            touch tmp/restart.txt
-          else
-            echo "🔄 Sending SIGUSR2 signal to process $PID..."
-            kill -SIGUSR2 $PID || true
-            echo "✅ Restart signal sent directly to the application."
-          fi
-          
+          echo "🔄 Triggering application restart..."
+          mkdir -p tmp
+          touch tmp/restart.txt
+
           echo "✅ Deployment completed!"
