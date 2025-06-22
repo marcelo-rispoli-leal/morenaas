@@ -36,7 +36,7 @@ npm install
 
 ```bash
 npm run server  # development mode with nodemon
-npm start      # production mode
+npm start       # production mode
 ```
 
 ## API Documentation
