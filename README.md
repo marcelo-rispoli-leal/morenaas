@@ -41,7 +41,7 @@ npm start      # production mode
 
 ## API Documentation
 
-Access interactive documentation using Swagger UI at `https://morenaas.alwaysdata.net/docs` after starting the server.
+Access interactive documentation using Swagger UI at https://morenaas.alwaysdata.net/docs after starting the server.
 
 ## Database Configuration
 
@@ -73,4 +73,4 @@ The included PostgreSQL user in `.env` has all privileges to the only database c
 
 ## Project Purpose
 
-This API serves as a technical demonstration of PERN stack development skills (Postgres, Express, React, Node), implementing movie rental concepts for portfolio purposes. While following production-grade patterns, it's not meant for actual commercial use.
+This API serves as a technical demonstration of full-stack development skills, implementing movie rental concepts for portfolio purposes. While following production-grade patterns, it's not meant for actual commercial use.
