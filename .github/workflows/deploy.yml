@@ -34,7 +34,7 @@ jobs:
             touch tmp/restart.txt
           else
             echo "🔄 Sending SIGUSR2 signal to process $PID..."
-            kill -SIGUSR2 $PID
+            kill -SIGUSR2 $PID || true
             echo "✅ Restart signal sent directly to the application."
           fi
           
