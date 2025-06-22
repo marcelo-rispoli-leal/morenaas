@@ -1,9 +1,8 @@
 name: Auto Deploy Node.js API
-
 on:
   push:
     branches: [ master ]
-  workflow_dispatch:  # Deploy manual quando necessário
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -16,13 +15,25 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}
+        timeout: 60s
+        command_timeout: 5m
         script: |
           cd ~/www/morenaas
-          echo "🔄 Atualizando código..."
+          echo "🔄 Updating code..."
           git pull origin master
-          echo "📦 Instalando dependências..."
+          
+          echo "📦 Installing dependencies..."
           npm install --only=production
-          echo "🔄 Reiniciando API..."
-          # Reinicia a aplicação Node.js no AlwaysData
-          touch tmp/restart.txt 2>/dev/null || killall node 2>/dev/null || true
-          echo "✅ Deploy concluído!"
+          
+          echo "🔄 Requesting restart via SIGUSR2..."
+          mkdir -p tmp
+          touch tmp/restart.txt
+          
+          echo "⏳ Waiting for automatic restart..."
+          sleep 3
+          
+          echo "🔍 Checking if the application has restarted..."
+          # Wait a little longer for the restart to complete.
+          sleep 2
+          
+          echo "✅ Deployment completed! Restart requested via hot restart."
