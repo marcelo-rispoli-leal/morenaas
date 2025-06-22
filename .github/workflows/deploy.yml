@@ -2,7 +2,7 @@ name: Auto Deploy Node.js API
 on:
   push:
     branches: [ master ]
-  workflow_dispatch:  # Deploy manual quando necessário
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -15,39 +15,25 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}
+        timeout: 60s
+        command_timeout: 5m
         script: |
           cd ~/www/morenaas
-          echo "🔄 Atualizando código..."
+          echo "🔄 Updating code..."
           git pull origin master
           
-          echo "📦 Instalando dependências..."
+          echo "📦 Installing dependencies..."
           npm install --only=production
           
-          echo "🔄 Parando processos Node.js existentes..."
-          # Para todos os processos Node.js do usuário
-          pkill -f "node.*app.js" 2>/dev/null || true
-          pkill -f "node.*server.js" 2>/dev/null || true
-          pkill -f "node.*index.js" 2>/dev/null || true
+          echo "🔄 Requesting restart via SIGUSR2..."
+          mkdir -p tmp
+          touch tmp/restart.txt
+          
+          echo "⏳ Waiting for automatic restart..."
+          sleep 3
+          
+          echo "🔍 Checking if the application has restarted..."
+          # Wait a little longer for the restart to complete.
           sleep 2
           
-          echo "🚀 Iniciando nova instância da API..."
-          # Inicia a aplicação em background
-          nohup node app.js > ~/logs/api.log 2>&1 &
-          
-          echo "⏳ Aguardando inicialização..."
-          sleep 5
-          
-          echo "🔍 Verificando se a API está rodando..."
-          # Verifica se o processo está ativo
-          if pgrep -f "node.*app.js" > /dev/null; then
-            echo "✅ API iniciada com sucesso!"
-            echo "📊 Processos Node.js ativos:"
-            pgrep -f "node" -l || true
-          else
-            echo "❌ Falha ao iniciar a API"
-            echo "📋 Últimas linhas do log:"
-            tail -10 ~/logs/api.log 2>/dev/null || echo "Log não encontrado"
-            exit 1
-          fi
-          
-          echo "✅ Deploy concluído!"
+          echo "✅ Deployment completed! Restart requested via hot restart."
