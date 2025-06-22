@@ -57,18 +57,17 @@ The included PostgreSQL user in `.env` has all privileges to the only database c
 
 ```
 ├── server/
-│   ├── app/           # Core application logic
-│   │   ├── controllers/  # Route handlers
-│   │   ├── docs/         # Swagger definitions
-│   │   ├── libs/         # Utilities and helpers
-│   │   ├── middlewares/  # Authentication layers
-│   │   └── routes/       # API endpoint routers
-│   ├── jsconfig.json # JavaScript configuration
-├── .env               # Environment variables
-├── .gitignore         # Version control exclusions
-├── package.json       # Dependencies and scripts
+│   └── app/                 # Core application logic
+│       ├── controllers/     # Route handlers
+│       ├── docs/            # Swagger definitions
+│       ├── libs/            # Utilities and helpers
+│       ├── middlewares/     # Authentication layers
+│       └── routes/          # API endpoint routers
+├── .env                     # Environment variables
+├── .gitignore               # Version control exclusions
+├── package.json             # Dependencies and scripts
 ├── scripts_db_postgres.txt  # Database schema setup
-└── README.md          # Project documentation
+└── README.md                # Project documentation
 ```
 
 ## Project Purpose
