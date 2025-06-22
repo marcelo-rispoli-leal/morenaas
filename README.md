@@ -45,7 +45,7 @@ Access interactive documentation using Swagger UI at https://morenaas.alwaysdata
 
 ## Database Configuration
 
-The included PostgreSQL user in `.env` has all privileges to the only database created in the instance.
+The included PostgreSQL user in `.env` has all privileges to the unique database created in the instance.
 
 ## Testing Guidelines
 
