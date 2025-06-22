@@ -39,7 +39,7 @@ const shutdown = (signal) => {
 
 // Listen for termination signals
 process.on('SIGTERM', () => shutdown('SIGTERM'));
-process.on('SIGUSR2', () => shutdown('SIGUSR2')); // Used by AlwaysData for hot restart
+process.on('SIGUSR2', () => shutdown('SIGUSR2'));
 
 //start express app
 const app = express();
