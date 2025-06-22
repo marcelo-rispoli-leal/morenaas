@@ -7,49 +7,39 @@ import { swaggerDoc } from './app/docs/doc.js';
 import { authRouter } from './app/routes/authRouter.js';
 import { userRouter } from './app/routes/userRouter.js';
 import { movieRouter } from './app/routes/movieRouter.js';
+import { db } from './app/services/db.js';
 
 let server;
 
-// Handler for hot restart via SIGUSR2
-process.on('SIGUSR2', () => {
-  console.log('🔄 Received SIGUSR2 signal - Restarting application...');
-
-  // Close existing connections gracefully
+// Graceful shutdown logic
+const shutdown = (signal) => {
+  console.log(`🛑 Received ${signal}. Shutting down gracefully...`);
   if (server) {
-    server.close(() => {
-      console.log('✅ Server closed. Restarting process...');
+    server.close(async (err) => {
+      console.log('🔌 Closing database pool...');
+      await db.close();
+      if (err) {
+        console.error('❌ Error during server close:', err);
+        process.exit(1);
+      }
+      console.log('✅ Server and database pool closed. Exiting process.');
       process.exit(0);
     });
 
-    // Force exit after 10 seconds if can't close gracefully
+    // Force shutdown if graceful shutdown takes too long
     setTimeout(() => {
-      console.log('⚠️ Forcing process termination...');
+      console.warn('⚠️ Graceful shutdown timed out. Forcing exit.');
       process.exit(1);
-    }, 10000);
+    }, 10000); // 10-second timeout
   } else {
-    console.log('⚠️ Server not initialized, exiting directly.');
-    process.exit(1);
+    console.log('⚠️ Server not initialized. Exiting directly.');
+    process.exit(0);
   }
-});
+};
 
-// Handler for SIGTERM (used by AlwaysData to stop the process)
-process.on('SIGTERM', () => {
-  console.log('🛑 Received SIGTERM - Shutting down application...');
-
-  if (server) {
-    server.close(() => {
-      console.log('✅ Application shutdown gracefully');
-      process.exit(0);
-    });
-
-    setTimeout(() => {
-      process.exit(1);
-    }, 10000);
-  } else {
-    console.log('⚠️ Server not initialized, exiting directly.');
-    process.exit(1);
-  }
-});
+// Listen for termination signals
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGUSR2', () => shutdown('SIGUSR2')); // Used by AlwaysData for hot restart
 
 //start express app
 const app = express();
