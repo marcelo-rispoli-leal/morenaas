@@ -8,6 +8,37 @@ import { authRouter } from './app/routes/authRouter.js';
 import { userRouter } from './app/routes/userRouter.js';
 import { movieRouter } from './app/routes/movieRouter.js';
 
+// Handler for hot restart via SIGUSR2
+process.on('SIGUSR2', () => {
+  console.log('🔄 Received SIGUSR2 signal - Restarting application...');
+
+  // Close existing connections gracefully
+  server.close(() => {
+    console.log('✅ Server closed. Restarting process...');
+    process.exit(0);
+  });
+
+  // Force exit after 10 seconds if can't close gracefully
+  setTimeout(() => {
+    console.log('⚠️ Forcing process termination...');
+    process.exit(1);
+  }, 10000);
+});
+
+// Handler for SIGTERM (used by AlwaysData to stop the process)
+process.on('SIGTERM', () => {
+  console.log('🛑 Received SIGTERM - Shutting down application...');
+
+  server.close(() => {
+    console.log('✅ Application shutdown gracefully');
+    process.exit(0);
+  });
+
+  setTimeout(() => {
+    process.exit(1);
+  }, 10000);
+});
+
 //start express app
 const app = express();
 
