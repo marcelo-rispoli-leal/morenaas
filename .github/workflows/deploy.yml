@@ -25,15 +25,17 @@ jobs:
           echo "📦 Installing dependencies..."
           npm install --only=production
           
-          echo "🔄 Requesting restart via SIGUSR2..."
-          mkdir -p tmp
-          touch tmp/restart.txt
+          echo "🔍 Finding Node.js process ID (PID)..."
+          PID=$(pgrep -f \"[n]ode server/app.js\")
           
-          echo "⏳ Waiting for automatic restart..."
-          sleep 3
+          if [ -z \"$PID\" ]; then
+            echo \"⚠️ Could not find running Node.js process. It might be starting or stopped.\"
+            mkdir -p tmp
+            touch tmp/restart.txt
+          else
+            echo "🔄 Sending SIGUSR2 signal to process $PID..."
+            kill -SIGUSR2 $PID
+            echo "✅ Restart signal sent directly to the application."
+          fi
           
-          echo "🔍 Checking if the application has restarted..."
-          # Wait a little longer for the restart to complete.
-          sleep 2
-          
-          echo "✅ Deployment completed! Restart requested via hot restart."
+          echo "✅ Deployment completed!"
