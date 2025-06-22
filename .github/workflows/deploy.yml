@@ -26,10 +26,10 @@ jobs:
           npm install --only=production
           
           echo "🔍 Finding Node.js process ID (PID)..."
-          PID=$(pgrep -f \"[n]ode server/app.js\")
+          PID=$(pgrep -f "node server/app.js")
           
-          if [ -z \"$PID\" ]; then
-            echo \"⚠️ Could not find running Node.js process. It might be starting or stopped.\"
+          if [ -z "$PID" ]; then
+            echo "⚠️ Could not find running Node.js process. It might be starting or stopped."
             mkdir -p tmp
             touch tmp/restart.txt
           else
