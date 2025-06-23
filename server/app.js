@@ -20,7 +20,7 @@ const log = (message) => {
   const timestamp = new Date().toISOString();
   const logMessage = `${timestamp}: ${message}\n`;
   fs.appendFileSync(logPath, logMessage);
-  console.log(message); // Also log to console for standard logging
+  console.log(message); // Also log to console for standard log
 };
 
 let server;
