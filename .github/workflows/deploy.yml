@@ -1,41 +1,24 @@
-name: Auto Deploy Node.js API
+name: Deploy to AlwaysData
+
 on:
   push:
-    branches: [ master ]
-  workflow_dispatch:
+    branches:
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Deploy to AlwaysData
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        timeout: 60s
-        command_timeout: 5m
-        script: |
-          cd ~/www/morenaas
-          echo "🔄 Updating code..."
-          git pull origin master
-          
-          echo "📦 Installing dependencies..."
-          npm install --only=production
-          
-          echo "🔍 Finding Node.js process ID (PID)..."
-          PID=$(pgrep -f \"[n]ode server/app.js\")
-          
-          if [ -z \"$PID\" ]; then
-            echo \"⚠️ Could not find running Node.js process. It might be starting or stopped.\"
-            mkdir -p tmp
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+          script: |
+            cd ~/www/morenaas/
+            git pull origin master
+            npm install
             touch tmp/restart.txt
-          else
-            echo "🔄 Sending SIGUSR2 signal to process $PID..."
-            kill -SIGUSR2 $PID
-            echo "✅ Restart signal sent directly to the application."
-          fi
-          
-          echo "✅ Deployment completed!"
