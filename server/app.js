@@ -45,7 +45,7 @@ const { APP_HOST, PORT } = process.env;
 const host = APP_HOST || 'http://localhost:3001';
 const port = PORT || 3001;
 
-server = app.listen(port, async () => {
+app.listen(port, async () => {
   try {
     console.log(`API Started on host '${host}' and port '${port}'`);
   } catch (err) {
