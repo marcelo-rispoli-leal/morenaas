@@ -20,10 +20,5 @@ jobs:
           script: |
             cd ~/www/morenaas/
             git pull
-            echo "--- Git Status After Pull ---"
-            git status
-            echo "--- Content of server/app.js ---"
-            cat server/app.js
-            echo "-----------------------------"
             npm install
-            touch tmp/restart.txt
+            curl -X POST --basic --user "${{ secrets.API_KEY }} account=morenaas:" https://api.alwaysdata.com/v1/site/958799/restart/
