@@ -19,6 +19,11 @@ jobs:
           port: 22
           script: |
             cd ~/www/morenaas/
-            git pull origin master
+            git pull
+            echo "--- Git Status After Pull ---"
+            git status
+            echo "--- Content of server/app.js ---"
+            cat server/app.js
+            echo "-----------------------------"
             npm install
             touch tmp/restart.txt
