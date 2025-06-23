@@ -91,7 +91,6 @@ This project is configured for continuous deployment to [AlwaysData](https://www
 2.  **Configure GitHub Secrets:**
     In your GitHub repository, go to `Settings` > `Secrets and variables` > `Actions` and add the following secrets:
 
-    - `AWD_GIT_BRANCH`: The name of the GitHub branch to deploy to AlwaysData after push (e.g., `master`).
     - `AWD_SSH_HOST`: Your SSH server address on AlwaysData (e.g., `ssh-yoursite.alwaysdata.net`).
     - `AWD_SSH_USER`: Your SSH username on AlwaysData (e.g., `yoursite`).
     - `AWD_SSH_PASSWORD`: Your SSH user password on AlwaysData (or an app password).
@@ -102,4 +101,4 @@ This project is configured for continuous deployment to [AlwaysData](https://www
     - `AWD_SITE_ID`: Your site ID on AlwaysData. You can find the ID in the URL when editing your site in the AlwaysData panel (e.g., `https://admin.alwaysdata.com/site/123456/`, the ID is `123456`).
 
 3.  **Deploy:**
-    Any `push` to the `AWD_GIT_BRANCH` branch will trigger the GitHub Actions workflow, which will deploy your application to the AlwaysData server and restart it automatically.
+    Any `push` to the `master` branch will trigger the GitHub Actions workflow, which will deploy your application to the AlwaysData server and restart it automatically.
