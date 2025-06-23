@@ -18,7 +18,8 @@
     "brazil-cpf-validation",
     "swagger-documentation",
     "nodemailer-integration",
-    "movie-rental-system"
+    "movie-rental-system",
+    "alwaysdata"
   ],
   "author": "Marcelo Rispoli Leal",
   "license": "MIT",

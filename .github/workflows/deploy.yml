@@ -3,7 +3,7 @@ name: Deploy to AlwaysData
 on:
   push:
     branches:
-      - master
+      - ${{ secrets.AWD_GIT_BRANCH }}
 
 jobs:
   deploy:
@@ -13,12 +13,12 @@ jobs:
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: 22
+          host: ${{ secrets.AWD_SSH_HOST }}
+          username: ${{ secrets.AWD_SSH_USER }}
+          password: ${{ secrets.AWD_SSH_PASSWORD }}
+          port: ${{ secrets.AWD_SSH_PORT }}
           script: |
-            cd ~/www/morenaas/
+            cd ~/${{ secrets.AWD_SITE_PATH }}/
             git pull
             npm install
-            curl -X POST --basic --user "${{ secrets.API_KEY }} account=morenaas:" https://api.alwaysdata.com/v1/site/958799/restart/
+            curl -X POST --basic --user "${{ secrets.AWD_API_KEY }} account=${{ secrets.AWD_ACCOUNT }}:" https://api.alwaysdata.com/v1/site/${{ secrets.AWD_SITE_ID }}/restart/
