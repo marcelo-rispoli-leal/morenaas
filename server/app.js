@@ -69,10 +69,10 @@ process.on('SIGTERM', () => {
   shutdown('SIGTERM');
 });
 
-process.on('SIGUSR2', () => {
+/* process.on('SIGUSR2', () => {
   log('Received SIGUSR2 signal.');
   shutdown('SIGUSR2');
-});
+}); */
 
 //start express app
 const app = express();
